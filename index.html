@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Skills Improvement</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            height: 100vh;
+            margin: 0;
+        }
+        #word {
+            font-size: 2em;
+            margin: 20px;
+        }
+        input {
+            font-size: 1.5em;
+            padding: 10px;
+            width: 300px;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        #timer {
+            font-size: 1.5em;
+            color: red;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Typing Skills Improvement</h1>
+    <div id="word"></div>
+    <input type="text" id="input" placeholder="Type here..." autofocus>
+    <div id="timer">5</div>
+    <div id="message"></div>
+    <button id="startButton">Start</button>
+
+    <script>
+        const words = ["apple", "banana", "orange", "grape", "strawberry", "kiwi", "pineapple", "mango"];
+        let currentWord;
+        let timer;
+        let timeLeft = 5;
+
+        const wordElement = document.getElementById('word');
+        const inputElement = document.getElementById('input');
+        const timerElement = document.getElementById('timer');
+        const messageElement = document.getElementById('message');
+        const startButton = document.getElementById('startButton');
+
+        startButton.addEventListener('click', startGame);
+
+        function startGame() {
+            inputElement.value = '';
+            messageElement.innerText = '';
+            timeLeft = 5;
+            currentWord = getRandomWord();
+            wordElement.innerText = currentWord;
+            inputElement.focus();
+            startTimer();
+        }
+
+        function getRandomWord() {
+            return words[Math.floor(Math.random() * words.length)];
+        }
+
+        function startTimer() {
+            timerElement.innerText = timeLeft;
+            timer = setInterval(() => {
+                timeLeft--;
+                timerElement.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    checkInput();
+                }
+            }, 1000);
+        }
+
+        function checkInput() {
+            const inputText = inputElement.value;
+            const correctChars = currentWord.split('').filter((char, index) => char === inputText[index]).length;
+            messageElement.innerText = `You typed ${correctChars} out of ${currentWord.length} correctly!`;
+            inputElement.value = '';
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
